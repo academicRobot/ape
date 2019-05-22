@@ -13,11 +13,12 @@ dist.nodes <- function(x)
     n <- Ntip(x)
     m <- x$Nnode
     nm <- n + m
+    nm_nm <- double(nm) * double(nm)
 
     d <- .C(dist_nodes, as.integer(n), as.integer(m),
             as.integer(x$edge[, 1] - 1L), as.integer(x$edge[, 2] - 1L),
             as.double(x$edge.length), as.integer(Nedge(x)),
-            double(nm) * double(nm), NAOK = TRUE)[[7]]
+            double(nm_nm), NAOK = TRUE)[[7]]
     dim(d) <- c(nm, nm)
     dimnames(d) <- list(1:nm, 1:nm)
     d
